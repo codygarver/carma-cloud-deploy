@@ -9,15 +9,15 @@ filter {
         name   = "virtualization-type"
         values = ["hvm"]
     }
-owners = ["099720109477"] # Canonical
+owners = ["618216343101"] # Canonical
 }
 # provision to us-east-2 region
 provider "aws" {
-  region  = "us-east-2"
+  region  = "us-east-2a"
 }
 resource "aws_instance" "app_server" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.micro"
+  instance_type = "t2.micro"
   key_name      = "myJune222Key"
 tags = {
     Name = var.ec2_name
