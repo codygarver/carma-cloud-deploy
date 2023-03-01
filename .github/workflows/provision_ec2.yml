@@ -1,11 +1,11 @@
-name: Provision t3.micro EC2
+name: Carmacloud-test
 on:
   workflow_dispatch:
     inputs:
       ec2-name:
         description: EC2 name
         required: true
-        default: 'App Server'
+        default: 'carmacloud-test'
         type: string
 jobs:
   provision-ec2:
@@ -35,3 +35,11 @@ jobs:
           terraform validate
           terraform plan
           terraform apply -auto-approve
+
+      - name: Terraform destroy
+        id:   destroy
+        env:
+          TF_VAR_ec2_name:  "${{ github.event.inputs.ec2-name }}"
+        run: |
+          cd tf-example/
+          terraform destroy
