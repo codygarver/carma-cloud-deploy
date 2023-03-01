@@ -9,7 +9,7 @@ filter {
         name   = "virtualization-type"
         values = ["hvm"]
     }
-owners = ["618216343101"] # Canonical
+owners = ["099720109477"] # Canonical
 }
 # provision to us-east-2 region
 provider "aws" {
