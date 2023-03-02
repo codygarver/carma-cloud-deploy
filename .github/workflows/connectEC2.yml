@@ -1,9 +1,9 @@
-name: RunCC-test
+name: runcommands
 on:
   workflow_dispatch:
     inputs:
       run-cc:
-        description: Run-CCcommands
+        description: runcommands
         required: true
         default: 'carmacloudcomands'
         type: string
