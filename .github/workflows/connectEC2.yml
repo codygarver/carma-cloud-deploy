@@ -1,7 +1,12 @@
-name: connectec2
-
-on: push
-
+name: RunCC-test
+on:
+  workflow_dispatch:
+    inputs:
+      run-cc:
+        description: Run-CCcommands
+        required: true
+        default: 'carmacloudcomands'
+        type: string
 jobs:
   deploy:
     name: Push to EC2 Instance
