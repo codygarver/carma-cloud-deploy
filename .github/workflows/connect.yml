@@ -16,23 +16,27 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v1
-
-      - name: Deploy to my EC2 instance
-        uses: easingthemes/ssh-deploy@v2.1.5
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          SOURCE: "./"
-          REMOTE_HOST: "ec2-3-142-74-92.us-east-2.compute.amazonaws.com"
-          REMOTE_USER: "ec2-user"
-          TARGET: "/home/ec2-user/"
+      - name: Connect to ece2
+        run: |
+          cd tf-examples
+          chmod 600 myjune222key.pem
+          ssh -i "myJune222Key.pem" ubuntu@ec2-3-142-74-92.us-east-2.compute.amazonaws.com
+      #- name: Deploy to my EC2 instance
+        #uses: easingthemes/ssh-deploy@v2.1.5
+        #env:
+          #SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          #SOURCE: "./"
+          #REMOTE_HOST: "ec2-3-142-74-92.us-east-2.compute.amazonaws.com"
+          #REMOTE_USER: "ec2-user"
+          #TARGET: "/home/ec2-user/"
       - name: Initialize the directory on ec2
         run: |
-          git init
           # java and javac must be executable from the command line
           # update and get required packages
           sudo apt-get update
           sudo apt-get install pkg-config sqlite3 libsqlite3-dev iptables
           # download, compile, and install proj needed to process XODR files
+          git init
           cd /tmp
           wget https://download.osgeo.org/proj/proj-6.1.1.tar.gz
           tar -xzf proj-6.1.1.tar.gz
