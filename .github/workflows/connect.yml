@@ -19,8 +19,7 @@ jobs:
       - name: Connect to ece2
         run: |
           ls -la && pwd         
-          cd ./tf-example
-          chmod 600 myjune222key.pem
+          cd /tf-example && chmod 600 myJune222Key.pem
           ssh -i "myJune222Key.pem" ubuntu@ec2-3-142-74-92.us-east-2.compute.amazonaws.com
       #- name: Deploy to my EC2 instance
         #uses: easingthemes/ssh-deploy@v2.1.5
