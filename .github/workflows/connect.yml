@@ -18,9 +18,8 @@ jobs:
         uses: actions/checkout@v1
       - name: Connect to ece2
         run: |
-          ls -la && pwd
-          
-          cd ./tf-examples
+          ls -la && pwd         
+          cd ./tf-example
           chmod 600 myjune222key.pem
           ssh -i "myJune222Key.pem" ubuntu@ec2-3-142-74-92.us-east-2.compute.amazonaws.com
       #- name: Deploy to my EC2 instance
