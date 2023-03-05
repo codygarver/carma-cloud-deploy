@@ -14,14 +14,22 @@ jobs:
     container:
       image: cimg/openjdk:17.0.2
     steps:
-      - name: Checkout the code
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Reconfigure git to use HTTP authentication
+        run: >
+          git config --global url."https://github.com/".insteadOf
+          ssh://git@github.com/
+      - name: Checkout the code      
         env:
             PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
             HOSTNAME : ${{ secrets.HOSTNAME  }}
             USER_NAME : ${{ secrets.USER_NAME  }}            
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 777 private_key
-          ssh -tt -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} 
+          ssh -tt -o StrictHostKeyChecking=no -i private_key -C ${USER_NAME}@${HOSTNAME} 
           sudo apt-get update
           sudo apt-get install pkg-config sqlite3 libsqlite3-dev iptables
           # download, compile, and install proj needed to process XODR files
