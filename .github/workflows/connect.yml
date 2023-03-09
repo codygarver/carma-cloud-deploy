@@ -15,5 +15,4 @@ jobs:
       - name: Connect to ece2
         run: |
           ls -la && pwd         
-          cd /tf-example && chmod 600 myJune222Key.pem
-          ssh -i "${{ secrets.EC2_SSH_KEY }}" ubuntu@ec2-3-131-96-136.us-east-2.compute.amazonaws.com
+          cd ./tf-example && sudo chmod u+x myJune222Key.pem &&  ssh -i "${{ secrets.EC2_SSH_KEY }}" -tt -R ubuntu@ec2-3-131-96-136.us-east-2.compute.amazonaws.com
