@@ -16,48 +16,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        #with:
-         #persist-credentials: false
-      - name: Reconfigure git to use HTTP authentication
-        run: >
-          sudo git config --global url."https://github.com/".insteadOf
-          sudo ssh://git@github.com/
-      - name: Checkout the code      
+      - name: Deploy to Server 1
+        uses: easingthemes/ssh-deploy@main
         env:
             PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
             HOSTNAME : ${{ secrets.HOSTNAME  }}
-            USER_NAME : ${{ secrets.USER_NAME  }}            
+            USER_NAME : ${{ secrets.USER_NAME  }}
+            TARGET: ${{ secrets.TARGET_DIR }}
+  
+ 
+      - name: Run CC comands 
         run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 777 private_key
-          sudo ssh -tt -o StrictHostKeyChecking=no -i private_key -C ${USER_NAME}@${HOSTNAME} 
-          sudo apt-get update
-          sudo apt-get install pkg-config sqlite3 libsqlite3-dev iptables
-          # download, compile, and install proj needed to process XODR files
-          git init
-          cd /tmp
-          wget https://download.osgeo.org/proj/proj-6.1.1.tar.gz
-          tar -xzf proj-6.1.1.tar.gz
-          mv proj-6.1.1 proj
-          cd proj
-          ./configure
-          make
-          sudo make install
-          rm -rf proj
-          rm -f proj-6.1.1.tar.gz
-      #- name: Connect to ece2
-        #run: |
-          #ls -la && pwd 
-          #cd ./tf-example && sudo chmod u+x myJune222Key.pem &&  ssh -tt -i "myJune222Key.pem" ubuntu@ec2-3-142-74-92.us-east-2.compute.amazonaws.com
-      #- name: Deploy to my EC2 instance
-        #uses: easingthemes/ssh-deploy@v2.1.5
-        #env:
-          #SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          #SOURCE: "./"
-          #REMOTE_HOST: "ec2-3-142-74-92.us-east-2.compute.amazonaws.com"
-          #REMOTE_USER: "ec2-user"
-          #TARGET: "/home/ec2-user/"
-      #- name: Initialize the directory on ec2
-        #run: |
-          # java and javac must be executable from the command line
-          # update and get required packages
-          
+          ls -la
+          pwd
