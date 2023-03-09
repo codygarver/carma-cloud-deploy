@@ -1,4 +1,4 @@
-name: runcommands
+name: Push-to-Ec2
 on:
   workflow_dispatch:
     inputs:
@@ -11,20 +11,16 @@ jobs:
   deploy:
     name: Push to EC2 Instance
     runs-on: ubuntu-latest
-    container:
-      image: cimg/openjdk:17.0.2
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
       - name: Deploy to Server 1
         uses: easingthemes/ssh-deploy@main
         env:
             PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
             HOSTNAME : ${{ secrets.HOSTNAME  }}
             USER_NAME : ${{ secrets.USER_NAME  }}
-            TARGET: ${{ secrets.TARGET_DIR }}
-  
- 
+            TARGET: ${{ secrets.TARGET_DIR }}  
       - name: Run CC comands 
         run: |
           ls -la
