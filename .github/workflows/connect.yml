@@ -16,3 +16,8 @@ jobs:
         run: |
           ls -la && pwd         
           cd ./tf-example && sudo chmod u+x myJune222Key.pem &&  ssh -tt -o StrictHostKeyChecking=no -i "${{ secrets.EC2_SSH_KEY }}" ubuntu@ec2-3-131-96-136.us-east-2.compute.amazonaws.com
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: ${{ secrets.TARGET_DIR }}  
