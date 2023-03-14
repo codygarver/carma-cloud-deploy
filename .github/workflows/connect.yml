@@ -11,6 +11,7 @@ jobs:
     container:
       image: cimg/openjdk:17.0.2
     steps:
+      - run: chown -R 1001:1001 /root/.ssh
       - uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
