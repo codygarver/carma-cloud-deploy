@@ -17,7 +17,7 @@ jobs:
         shell: bash
         run: |
           ls -la && pwd         
-          cd ./tf-example && sudo chmod u+x myJune222Key.pem && sudo ssh -tt -o StrictHostKeyChecking=no -i myJune222Key.pem ubuntu@ec2-3-17-204-144.us-east-2.compute.amazonaws.com
+          cd ./tf-example && sudo chmod u+x myJune222Key.pem && sudo ssh -tt -o StrictHostKeyChecking=no -i myJune222Key.pem ubuntu@ec2-3-17-65-168.us-east-2.compute.amazonaws.com
         env:
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
