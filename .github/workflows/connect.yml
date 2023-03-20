@@ -11,36 +11,30 @@ jobs:
     container:
       image: cimg/openjdk:17.0.2
     steps:
-      - name: Checkout the code
-        uses: actions/checkout@v1
-      - name: Connect to ece2
-        shell: bash
-        run: |
-          ls -la && pwd         
-          cd ./tf-example && sudo chmod u+x myJune222Key.pem && sudo ssh -tt -o StrictHostKeyChecking=no -i myJune222Key.pem ubuntu@ec2-3-138-36-147.us-east-2.compute.amazonaws.com
-        env:
-          REMOTE_HOST: ${{ secrets.HOST_DNS }}
-          REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: ${{ secrets.TARGET_DIR }}  
-      - name: Update Ec2 and RUN cc Comands
-        shell: bash 
-        run: |
-         ls -la && pwd && mkdir tmp
-         cd tmp
-         # download apache tomcat
-         wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz
-         tar -xzf apache-tomcat-9.0.34.tar.gz
-         mv apache-tomcat-9.0.34 tomcat
-         rm -rf tomcat/webapps/ROOT
-         rm -rf tomcat/webapps/docs
-         rm -rf tomcat/webapps/examples
-         rm -rf tomcat/webapps/host-manager
-         rm -rf tomcat/webapps/manager
-         rm -f apache-tomcat-9.0.34.tar.gz
-         #Compile source
-         git clone https://github.com/usdot-fhwa-stol/carma-cloud.git
-         mkdir -p tomcat/webapps/carmacloud/ROOT/WEB-INF/classes
-         find ./carma-cloud/src -name "*.java" > sources.txt
-         javac -cp "tomcat/lib/servlet-api.jar:carma-cloud/lib/*" -d tomcat/webapps/carmacloud/ROOT/WEB-INF/classes @sources.txt
-         rm -f sources.txt
-         ### configure web app
+      - name: Executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/home/ubuntu/
+            ls -la && pwd && mkdir tmp
+            cd tmp
+            # download apache tomcat
+            wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz
+            tar -xzf apache-tomcat-9.0.34.tar.gz
+            mv apache-tomcat-9.0.34 tomcat
+            rm -rf tomcat/webapps/ROOT
+            rm -rf tomcat/webapps/docs
+            rm -rf tomcat/webapps/examples
+            rm -rf tomcat/webapps/host-manager
+            rm -rf tomcat/webapps/manager
+            rm -f apache-tomcat-9.0.34.tar.gz
+            #Compile source
+            git clone https://github.com/usdot-fhwa-stol/carma-cloud.git
+            mkdir -p tomcat/webapps/carmacloud/ROOT/WEB-INF/classes
+            find ./carma-cloud/src -name "*.java" > sources.txt
+            javac -cp "tomcat/lib/servlet-api.jar:carma-cloud/lib/*" -d tomcat/webapps/carmacloud/ROOT/WEB-INF/classes @sources.txt
+            rm -f sources.txt
+            ### configure web app
