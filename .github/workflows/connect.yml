@@ -20,7 +20,8 @@ jobs:
           script: |
             sudo apt-get update && pwd && mkdir tmp
             cd tmp
-            sudo apt-get install openjdk-8-jre && sudo apt-get install gunzip
+            #sudo add-apt-repository ppa:openjdk-r/ppa && sudo apt-get update && sudo apt-get install openjdk-8-jre
+            sudo echo $JAVA_HOME && echo $PATH && sudo apt-get install gunzip
             # download apache tomcat
             wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz
             tar -xzf apache-tomcat-9.0.34.tar.gz
