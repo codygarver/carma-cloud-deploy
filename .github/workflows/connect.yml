@@ -34,9 +34,9 @@ jobs:
             rm -f apache-tomcat-9.0.34.tar.gz
             #Compile source
             git clone https://github.com/usdot-fhwa-stol/carma-cloud.git
+            rm -rf ./carma-cloud/src/cc/ihp
             mkdir -p tomcat/webapps/carmacloud/ROOT/WEB-INF/classes
             find ./carma-cloud/src -name "*.java" > sources.txt
-            rm -rf ./carma-cloud/src/cc/ihp
             javac -cp "tomcat/lib/servlet-api.jar:carma-cloud/lib/*" -d tomcat/webapps/carmacloud/ROOT/WEB-INF/classes @sources.txt
             rm -f sources.txt
             ### configure web app
