@@ -18,8 +18,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            sudo su && sudo apt update && pwd && mkdir tmp
-            cd tmp
+            sudo su 
+            pwd && mkdir tmp && cd tmp
             #sudo add-apt-repository ppa:openjdk-r/ppa && sudo apt-get update && sudo apt-get install openjdk-8-jre
             sudo echo $JAVA_HOME && echo $PATH && sudo apt-get install zip -y
             # download apache tomcat
