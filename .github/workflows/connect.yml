@@ -69,7 +69,7 @@ jobs:
             sudo chown -R tomcat:tomcat tomcat/logs
             sudo chown -R tomcat:tomcat tomcat/temp
             sudo chown -R tomcat:tomcat tomcat/work
-            sudo mv tomcat /opt/
+            sudo mv tomcat /home/ubuntu/
             ## Start Tomcat and verify deployment
             sudo /opt/tomcat/bin/catalina.sh start
             sleep 10
