@@ -35,6 +35,7 @@ jobs:
             #Compile source
             git clone https://github.com/usdot-fhwa-stol/carma-cloud.git
             rm -rf ./carma-cloud/src/cc/ihp
+            rm -rf ./carma-cloud/src/cc/geosrv
             mkdir -p tomcat/webapps/carmacloud/ROOT/WEB-INF/classes
             find ./carma-cloud/src -name "*.java" > sources.txt
             javac -cp "tomcat/lib/servlet-api.jar:carma-cloud/lib/*" -d tomcat/webapps/carmacloud/ROOT/WEB-INF/classes @sources.txt
