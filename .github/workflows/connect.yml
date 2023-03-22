@@ -71,7 +71,7 @@ jobs:
             sudo chown -R tomcat:tomcat tomcat/work
             sudo mv tomcat /home/ubuntu/
             ## Start Tomcat and verify deployment
-            sudo /opt/tomcat/bin/catalina.sh start
+            sudo /home/ubuntu/tomcat/bin/catalina.sh start
             sleep 10
             if [[ `sudo grep "startup in" /home/ubuntu/tomcat/logs/catalina.out | wc -l` -ne "1" ]]; then exit 1; fi
             if [[ `wget -O - http://carmacloud:8080 | grep "CARMAcloud Login" | wc -l` -ne "1" ]]; then exit 2; fi
