@@ -18,7 +18,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            sudo su &&  apt-get update 
+            sudo su && sudo apt update && sudo apt upgrade 
             pwd && mkdir tmp && cd tmp
             #sudo apt install openjdk-19-jdk-headless
             #sudo echo $JAVA_HOME && echo $PATH && sudo apt-get install zip -y
@@ -73,6 +73,6 @@ jobs:
             ## Start Tomcat and verify deployment
             sudo /opt/tomcat/bin/catalina.sh start
             sleep 10
-            if [[ `sudo grep "startup in" /opt/tomcat/logs/catalina.out | wc -l` -ne "1" ]]; then exit 1; fi
+            if [[ `sudo grep "startup in" /home/ubuntu/tomcat/logs/catalina.out | wc -l` -ne "1" ]]; then exit 1; fi
             if [[ `wget -O - http://carmacloud:8080 | grep "CARMAcloud Login" | wc -l` -ne "1" ]]; then exit 2; fi
             if [[ `wget -O - --post-data="uname=ccadmin&pword=admin_testpw" http://carmacloud:8080/api/auth/login | grep "token" | wc -l` -ne "1" ]]; then exit 3; fi 
