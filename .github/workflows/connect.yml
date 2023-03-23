@@ -20,8 +20,7 @@ jobs:
           script: |
             sudo su && sudo apt update && sudo apt upgrade 
             pwd && mkdir tmp && cd tmp
-            #sudo apt install openjdk-19-jdk-headless
-            #sudo echo $JAVA_HOME && echo $PATH && sudo apt-get install zip -y
+            source .bashrc && source /etc/profile/
             # download apache tomcat
             wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz
             tar -xzf apache-tomcat-9.0.34.tar.gz
@@ -34,8 +33,6 @@ jobs:
             rm -f apache-tomcat-9.0.34.tar.gz
             #Compile source
             git clone https://github.com/usdot-fhwa-stol/carma-cloud.git
-            #rm -rf ./carma-cloud/src/cc/ihp
-            #rm -rf ./carma-cloud/src/cc/geosrv
             mkdir -p tomcat/webapps/carmacloud/ROOT/WEB-INF/classes
             find ./carma-cloud/src -name "*.java" > sources.txt
             javac -cp "tomcat/lib/servlet-api.jar:carma-cloud/lib/*" -d tomcat/webapps/carmacloud/ROOT/WEB-INF/classes @sources.txt
@@ -71,6 +68,8 @@ jobs:
             sudo chown -R tomcat:tomcat tomcat/work
             sudo mv tomcat /home/ubuntu/
             ## Start Tomcat and verify deployment
+            ls -la && pwd && cd ..
+            source .bashrc && source ./etc/profile
             sudo /home/ubuntu/tomcat/bin/catalina.sh start
             sudo grep -R 'catalina.out' .
             sleep 10
