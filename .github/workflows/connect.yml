@@ -20,7 +20,7 @@ jobs:
           script: |
             sudo su && sudo apt update && sudo apt upgrade 
             pwd && mkdir tmp && cd tmp
-            source .bashrc && source /etc/profile/
+            source /etc/profile/
             # download apache tomcat
             wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz
             tar -xzf apache-tomcat-9.0.34.tar.gz
@@ -66,9 +66,9 @@ jobs:
             sudo chown -R tomcat:tomcat tomcat/logs
             sudo chown -R tomcat:tomcat tomcat/temp
             sudo chown -R tomcat:tomcat tomcat/work
-            sudo mv tomcat /home/ubuntu/
+            sudo mv tomcat /home/ubuntu/ 
             ## Start Tomcat and verify deployment
-            ls -la && pwd && cd ..
+            ls -la && pwd && cd .. && rm -rf tmp
             source .bashrc && source .profile
             /home/ubuntu/tomcat/bin/catalina.sh start
             sudo grep -R 'catalina.out' .
