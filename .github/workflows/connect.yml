@@ -18,9 +18,9 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            sudo su 
-            sudo apt update -y
-            source .bashrc && source .profile
+            sudo -s
+            sudo -s apt update -y
+            sudo -s source .bashrc && source .profile
             sudo mkdir tmp && cd tmp
             # download apache tomcat
             wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz
@@ -63,15 +63,15 @@ jobs:
             sudo useradd -g tomcat -m tomcat
             chmod g+r tomcat/conf/*
             chmod -R o-rwx tomcat/webapps/*
-            sudo chown -R root:tomcat tomcat
-            sudo chown -R tomcat:tomcat tomcat/logs
-            sudo chown -R tomcat:tomcat tomcat/temp
-            sudo chown -R tomcat:tomcat tomcat/work
+            sudo -s chown -R root:tomcat tomcat
+            sudo -s chown -R tomcat:tomcat tomcat/logs
+            sudo -s chown -R tomcat:tomcat tomcat/temp
+            sudo -s chown -R tomcat:tomcat tomcat/work
             sudo mv tomcat /home/ubuntu/ 
             ## Start Tomcat and verify deployment
             ls -la && pwd && cd .. && rm -rf tmp
-            source /home/ubuntu/.bashrc && source /home/ubuntu/.profile
-            sudo /home/ubuntu/tomcat/bin/catalina.sh start
+            sudo -s source /home/ubuntu/.bashrc && source /home/ubuntu/.profile
+            sudo -s /home/ubuntu/tomcat/bin/catalina.sh start
             sleep 10
             if [[ `sudo grep "startup in" /home/ubuntu/tomcat/logs/catalina.out | wc -l` -ne "1" ]]; then exit 1; fi
             if [[ `wget -O - http://carmacloud:8080 | grep "CARMAcloud Login" | wc -l` -ne "1" ]]; then exit 2; fi
