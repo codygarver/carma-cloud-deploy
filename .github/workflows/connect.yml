@@ -69,7 +69,7 @@ jobs:
             sudo mv tomcat /home/ubuntu/
             ## Start Tomcat and verify deployment
             ls -la && pwd && cd ..
-            source .bashrc && source /etc/profile/
+            source .bashrc && source .profile
             sudo /home/ubuntu/tomcat/bin/catalina.sh start
             sudo grep -R 'catalina.out' .
             sleep 10
