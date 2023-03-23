@@ -18,9 +18,10 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            sudo su && sudo apt update && sudo apt upgrade 
-            pwd && mkdir tmp && cd tmp
-            source /etc/profile/
+            sudo su 
+            sudo apt update -y
+            source .bashrc && source .profile
+            sudo mkdir tmp && cd tmp
             # download apache tomcat
             wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz
             tar -xzf apache-tomcat-9.0.34.tar.gz
@@ -69,7 +70,7 @@ jobs:
             sudo mv tomcat /home/ubuntu/ 
             ## Start Tomcat and verify deployment
             ls -la && pwd && cd .. && rm -rf tmp
-            source .bashrc && source .profile
+            source /home/ubuntu/.bashrc && source /home/ubuntu/.profile
             sudo /home/ubuntu/tomcat/bin/catalina.sh start
             sleep 10
             if [[ `sudo grep "startup in" /home/ubuntu/tomcat/logs/catalina.out | wc -l` -ne "1" ]]; then exit 1; fi
