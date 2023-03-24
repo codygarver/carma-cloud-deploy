@@ -1,6 +1,6 @@
 name: Carmacloud-test
 on:
-  workflow_dispatch:
+  push:
     inputs:
       ec2-name:
         description: EC2 name
