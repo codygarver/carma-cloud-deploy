@@ -19,6 +19,7 @@ resource "aws_instance" "carmacloud-test" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   key_name      = "myJune222Key"
+  value         = "aws_instance.main.*.public_ip" 
 tags = {
     Name = var.ec2_name
   }
