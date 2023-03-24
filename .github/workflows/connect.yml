@@ -18,7 +18,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            sudo -s
+            sudo su
             sudo -s apt update -y
             #sudo apt install openjdk-11-jdk-headless
             sudo -s source .bashrc 
