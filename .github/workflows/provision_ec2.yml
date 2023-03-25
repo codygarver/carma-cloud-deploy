@@ -35,9 +35,7 @@ jobs:
           terraform validate
           terraform plan
           terraform apply -auto-approve
-      - uses: actions/checkout@v2
-      - name: Set env
-        run: echo "public_dns=$(echo $public_dns | cut -c 1-6)" >> ${{ secrets.HOST_DNS }}   
+          echo "public_dns=$(echo $public_dns | cut -c 1-6)" >> ${{ secrets.HOST_DNS }}   
           
   #PushtoEC2Instance:
     #runs-on: ubuntu-latest
