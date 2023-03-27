@@ -35,17 +35,12 @@ jobs:
           terraform validate
           terraform plan
           terraform apply -auto-approve
-          echo "public_dns=``" >> $HOST_DNS
+          echo PUBLIC_DNS=$(terraform output public_dns) >> $GITHUB_ENV
           
-  PushtoEC2Instance:
-    runs-on: ubuntu-latest
-    container:
-      image: cimg/openjdk:17.0.2
-    steps:
       - name: Executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST_DNS }}
+          host: ${{ env.PUBLIC_DNS }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
